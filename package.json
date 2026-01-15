@@ -20,7 +20,9 @@
   "homepage": "https://github.com/Tanya9270/NIELIT_Attendance#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "pdfkit": "^0.17.2",
     "pg": "^8.17.1"
   }
 }
