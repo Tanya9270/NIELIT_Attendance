@@ -14,12 +14,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-
   "bugs": {
     "url": "https://github.com/Tanya9270/NIELIT_Attendance/issues"
   },
   "homepage": "https://github.com/Tanya9270/NIELIT_Attendance#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.2.1",
     "pg": "^8.17.1"
   }
