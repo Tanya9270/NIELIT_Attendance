@@ -291,3 +291,37 @@ table tr:hover {
   width: 100% !important;
   min-height: 400px !important;
 }
+
+/* Admin panel layout enhancements */
+.admin-panel .columns {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.admin-panel .col {
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+
+.admin-panel .form-card {
+  background: #fbfdff;
+  border: 1px solid #f0f4f8;
+  padding: 12px 14px;
+  border-radius: 6px;
+}
+
+.admin-panel h2, .admin-panel h3 {
+  color: var(--nielit-dark);
+}
+
+.admin-panel .message {
+  margin-top: 12px;
+}
+
+@media (max-width: 700px) {
+  .admin-panel .columns {
+    flex-direction: column;
+  }
+}
