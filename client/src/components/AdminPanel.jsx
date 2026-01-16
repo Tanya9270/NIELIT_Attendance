@@ -8,6 +8,7 @@ export default function AdminPanel({ token }) {
   const [tCourseName, setTCourseName] = useState('');
   const [sRoll, setSRoll] = useState('');
   const [sName, setSName] = useState('');
+  const [sPassword, setSPassword] = useState('');
   const [sCourse, setSCourse] = useState('');
   const [msg, setMsg] = useState('');
   const [msgType, setMsgType] = useState('success');
@@ -33,6 +34,7 @@ export default function AdminPanel({ token }) {
     e.preventDefault();
     try {
       const res = await api.createTeacher(token, tUsername, tPassword, tCourseCode, tCourseName);
+      console.log('createTeacher response:', res);
       if (res.ok) {
         setMsgType('success');
         setMsg('Teacher created successfully');
@@ -52,11 +54,12 @@ export default function AdminPanel({ token }) {
   const createStudent = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.createStudent(token, sRoll, sName, sCourse);
+      const res = await api.createStudent(token, sRoll, sName, sCourse, sPassword);
+      console.log('createStudent response:', res);
       if (res.ok) {
         setMsgType('success');
         setMsg('Student created successfully');
-        setSRoll(''); setSName(''); setSCourse('');
+        setSRoll(''); setSName(''); setSCourse(''); setSPassword('');
       } else {
         setMsgType('error');
         setMsg(res.error || 'Failed to create student');
@@ -106,6 +109,10 @@ export default function AdminPanel({ token }) {
             <div className="form-group">
               <label>Name</label>
               <input value={sName} onChange={e=>setSName(e.target.value)} required />
+            </div>
+            <div className="form-group">
+              <label>Password (optional)</label>
+              <input type="password" value={sPassword} onChange={e=>setSPassword(e.target.value)} placeholder="Leave blank to use roll number" />
             </div>
             <div className="form-group">
               <label>Course Code (optional)</label>
