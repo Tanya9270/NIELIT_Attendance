@@ -240,27 +240,63 @@ export const api = {
   },
 
   async createTeacher(token, username, password, courseCode = '', courseName = '') {
-    const response = await fetch(`${API_BASE_URL}/admin/teachers`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ username, password, course_code: courseCode, course_name: courseName })
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/teachers`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ username, password, course_code: courseCode, course_name: courseName })
+      });
+
+      // Try parsing JSON, but fall back to text for HTML/error pages
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        const text = await response.text().catch(() => null);
+        return { ok: false, error: text || response.statusText || 'unexpected_response' };
+      }
+
+      if (!response.ok) {
+        // Ensure a consistent error shape
+        return data && data.error ? { ok: false, error: data.error } : { ok: false, error: data || response.statusText };
+      }
+
+      return data;
+    } catch (err) {
+      return { ok: false, error: err.message || 'network_error' };
+    }
   },
 
   async createStudent(token, rollNumber, name, courseCode = '', password = '') {
-    const response = await fetch(`${API_BASE_URL}/students`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ roll_number: rollNumber, name, course_code: courseCode, password })
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_BASE_URL}/students`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ roll_number: rollNumber, name, course_code: courseCode, password })
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        const text = await response.text().catch(() => null);
+        return { ok: false, error: text || response.statusText || 'unexpected_response' };
+      }
+
+      if (!response.ok) {
+        return data && data.error ? { ok: false, error: data.error } : { ok: false, error: data || response.statusText };
+      }
+
+      return data;
+    } catch (err) {
+      return { ok: false, error: err.message || 'network_error' };
+    }
   },
 
   // Get all teachers (admin)
